@@ -1,0 +1,6 @@
+id=bat-ndk
+name=bat for Android
+version=v0.11.0
+versionCode=1
+author=nelshh
+description=A statically built version of the bat tool for android (aarch64)

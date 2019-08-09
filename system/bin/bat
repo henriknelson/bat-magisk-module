@@ -1,0 +1,15 @@
+#!/system/bin/sh
+# bat: wrapper to set up and run bat from terminal
+# nelshh @ xda-developers
+
+dir="$(cd "$(dirname "$0")"; pwd)";
+
+if [ "$1" == "--term" ]; then
+  term=$2;
+  shift 2;
+else
+  term=screen;
+fi;
+
+resize >/dev/null;
+TERMINFO=$dir/../etc/terminfo TERM=$term LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$dir/../lib64" $dir/bat.bin "$@"
