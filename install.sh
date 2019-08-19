@@ -134,7 +134,7 @@ on_install() {
   # The following is the default implementation: extract $ZIPFILE/system to $MODPATH
   # Extend/change the logic to whatever you want
   ui_print "[1/3] Extracting files..";
-  unzip -o "$ZIPFILE" 'system/*' -d $MODPATH >&2;
+  unzip -o "$ZIPFILE" '*' -d $MODPATH >&2;
   ui_print "[2/3] Setting permissions..";
 }
 
@@ -151,12 +151,14 @@ set_permissions() {
   #set_perm $MODPATH/system/bin/less 0 0 0755 u:object_r:less_exec:s0
   #set_perm $MODPATH/system/lib64/libncursesw.so.6.1 0 0 0755 0644
   #set_perm_recursive $MODPATH/system/etc/terminfo 0 0 0755 0644
-  chmod 755 $MODPATH/service.sh;
+
   chown 0:0 $MODPATH/system/bin/bat $MODPATH/system/bin/bat.bin $MODPATH/system/bin/less;
   chmod 755 $MODPATH/system/bin/bat $MODPATH/system/bin/bat.bin $MODPATH/system/bin/less;
-  chown -R 0:0 $MODPATH/system/etc/terminfo;
-  find $MODPATH/system/etc/terminfo -type d -exec chmod 755 {} +;
-  find $MODPATH/system/etc/terminfo -type f -exec chmod 644 {} +;
+
+  chown -R 0:0 $MODPATH/system/usr/share/terminfo;
+  find $MODPATH/system/usr/share/terminfo -type d -exec chmod 755 {} +;
+  find $MODPATH/system/usr/share/terminfo -type f -exec chmod 644 {} +;
+
   chown 0:0 $MODPATH/system/lib64/libncursesw.so.6.1;
   #chmod 644 $MODPATH/system/lib64/libncursesw.so.6.1;
   #set_perm_recursive $MODPATH/system/lib         0     0       0755      0644;
