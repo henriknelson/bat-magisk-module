@@ -146,12 +146,6 @@ set_permissions() {
   # The following is the default rule, DO NOT remove
   set_perm_recursive $MODPATH 0 0 0755 0644;
 
-  #set_perm $MODPATH/system/bin/bat 0 0 0755 u:object_r:bat_exec:s0
-  #set_perm $MODPATH/system/bin/bat.bin 0 0 0755 u:object_r:bat_exec:s0
-  #set_perm $MODPATH/system/bin/less 0 0 0755 u:object_r:less_exec:s0
-  #set_perm $MODPATH/system/lib64/libncursesw.so.6.1 0 0 0755 0644
-  #set_perm_recursive $MODPATH/system/etc/terminfo 0 0 0755 0644
-
   chown 0:0 $MODPATH/system/bin/bat $MODPATH/system/bin/bat.bin $MODPATH/system/bin/less;
   chmod 755 $MODPATH/system/bin/bat $MODPATH/system/bin/bat.bin $MODPATH/system/bin/less;
 
@@ -159,15 +153,12 @@ set_permissions() {
   find $MODPATH/system/usr/share/terminfo -type d -exec chmod 755 {} +;
   find $MODPATH/system/usr/share/terminfo -type f -exec chmod 644 {} +;
 
+  chown -R 0:0 $MODPATH/system/usr/share/man;
+  find $MODPATH/system/usr/share/man -type d -exec chmod 755 {} +;
+  find $MODPATH/system/usr/share/man -type f -exec chmod 644 {} +;
+
   chown 0:0 $MODPATH/system/lib64/libncursesw.so.6.1;
-  #chmod 644 $MODPATH/system/lib64/libncursesw.so.6.1;
-  #set_perm_recursive $MODPATH/system/lib         0     0       0755      0644;
-  #set_perm_recursive $MODPATH/system/lib64       0     0       0755      0644;
   ui_print "[3/3] Installation finished";
-  # Here are some examples:
-  # set_perm  $MODPATH/system/bin/app_process32   0     2000    0755      u:object_r:zygote_exec:s0
-  # set_perm  $MODPATH/system/bin/dex2oat         0     2000    0755      u:object_r:dex2oat_exec:s0
-  # set_perm  $MODPATH/system/lib/libart.so       0     0       0644
 }
 
 # You can add more functions to assist your custom script code
