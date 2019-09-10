@@ -31,7 +31,7 @@ PROPFILE=false
 POSTFSDATA=false
 
 # Set to true if you need late_start service script
-LATESTARTSERVICE=true
+LATESTARTSERVICE=false
 
 ##########################################################################################
 # Replace list
@@ -122,45 +122,46 @@ REPLACE="
 # Set what you want to display when installing your module
 
 print_modname() {
-ui_print "******************************"
-ui_print "        bat for Android       "
-ui_print "     nelshh@xda-developers    "
-ui_print "******************************"
+  ui_print "*********************************************"
+  ui_print "     bat for Android                         "
+  ui_print "         - v 0.11.0                          "
+  ui_print "         - built by nelshh @ xda-developers  "
+  ui_print "*********************************************"
 }
 
 # Copy/extract your module files into $MODPATH in on_install.
-
 on_install() {
-  # The following is the default implementation: extract $ZIPFILE/system to $MODPATH
-  # Extend/change the logic to whatever you want
-  ui_print "[1/3] Extracting files..";
+  ui_print "[1/6] Extracting files..";
   unzip -o "$ZIPFILE" '*' -d $MODPATH >&2;
-  ui_print "[2/3] Setting permissions..";
+  ui_print "[2/6] Setting permissions..";
 }
-
-# Only some special files require specific permissions
-# This function will be called after on_install is done
-# The default permissions should be good enough for most cases
 
 set_permissions() {
   # The following is the default rule, DO NOT remove
   set_perm_recursive $MODPATH 0 0 0755 0644;
 
-  chown 0:0 $MODPATH/system/bin/bat $MODPATH/system/bin/bat.bin $MODPATH/system/bin/less;
-  chmod 755 $MODPATH/system/bin/bat $MODPATH/system/bin/bat.bin $MODPATH/system/bin/less;
+  ui_print "[3/6] Installing to /system/bin..";
+  chown -R 0:0 $MODPATH/system/bin;
+  chmod -R 755 $MODPATH/system/bin;
+  find $MODPATH/system/bin -type f -exec chmod 755 {} \+;
+  find $MODPATH/system/bin -type l -exec chmod 755 {} \+;
 
+  ui_print "[4/6] Installing to /system/usr/share/terminfo..";
   chown -R 0:0 $MODPATH/system/usr/share/terminfo;
-  find $MODPATH/system/usr/share/terminfo -type d -exec chmod 755 {} +;
-  find $MODPATH/system/usr/share/terminfo -type f -exec chmod 644 {} +;
+  chmod -R 755 $MODPATH/system/usr/share/terminfo;
+  find $MODPATH/system/usr/share/terminfo -type d -exec chmod 755 {} \+;
+  find $MODPATH/system/usr/share/terminfo -type f -exec chmod 644 {} \+;
 
-  chown -R 0:0 $MODPATH/system/usr/share/man;
-  find $MODPATH/system/usr/share/man -type d -exec chmod 755 {} +;
-  find $MODPATH/system/usr/share/man -type f -exec chmod 644 {} +;
+  ui_print "[5/6] Installing to /data/man..";
+  mkdir -p /data/man;
+  cp -r $MODPATH/custom/man/* /data/man/;
+  chmod -R 664 /data/man;
+  chown -R 0:0 /data/man;
+  find /data/man -type d -exec chmod 755 {} \+;
+  find /data/man -type f -exec chmod 664 {} \+;
+  if [[ -s "/system/bin/mandoc" ]]; then
+     makewhatis /data/man;
+  fi
 
-  chown 0:0 $MODPATH/system/lib64/libncursesw.so.6.1;
-  ui_print "[3/3] Installation finished";
+  ui_print "[6/6] Installation finished";
 }
-
-# You can add more functions to assist your custom script code
-
-
