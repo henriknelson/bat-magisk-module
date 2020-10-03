@@ -87,17 +87,22 @@ Specify when to use the decorations that have been specified via '\-\-style'. Th
 automatic mode only enables decorations if an interactive terminal is detected. Possible
 values: *auto*, never, always.
 .HP
+\fB\-f\fR, \fB\-\-force\-colorization\fR
+.IP
+Alias for '--decorations=always --color=always'. This is useful \
+if the output of bat is piped to another program, but you want \
+to keep the colorization/decorations.
+.HP
 \fB\-\-paging\fR <when>
 .IP
-Specify when to use the pager. To control which pager is used, set the PAGER or
-BAT_PAGER environment variables (the latter takes precedence) or use the '\-\-pager'
-option. To disable the pager permanently, set BAT_PAGER to an empty string or set
-\&'\-\-paging=never' in the configuration file. Possible values: *auto*, never, always.
+Specify when to use the pager. To disable the pager, use \&'\-\-paging=never' or its alias,
+\fB-P\fR. To disable the pager permanently, set BAT_PAGER to an empty string. To control
+which pager is used, see the '\-\-pager' option. Possible values: *auto*, never, always.
 .HP
 \fB\-\-pager\fR <command>
 .IP
-Determine which pager is used. This option will overwrite the PAGER and BAT_PAGER
-environment variables. The default pager is 'less'. To disable the pager completely, use
+Determine which pager is used. This option will override the PAGER and BAT_PAGER
+environment variables. The default pager is 'less'. To control when the pager is used, see
 the '\-\-paging' option. Example: '\-\-pager "less \fB\-RF\fR"'.
 .HP
 \fB\-m\fR, \fB\-\-map\-syntax\fR <glob-pattern:syntax-name>...
@@ -171,3 +176,39 @@ is dependent on your operating system. To get the default path for your system, 
 
 Alternatively, you can use the BAT_CONFIG_PATH environment variable to point bat to a non-default
 location of the configuration file.
+.SH "ADDING CUSTOM LANGUAGES"
+bat supports Sublime Text \fB.sublime-syntax\fR language files, and can be
+customized to add additional languages to your local installation. To do this, add the \fB.sublime-snytax\fR language
+files to `\fB$(bat --config-dir)/syntaxes\fR` and run `\fBbat cache --build\fR`.
+
+\fBExample:\fR
+
+.RS 0.5i
+mkdir -p "$(bat --config-dir)/syntaxes"
+.br
+cd "$(bat --config-dir)/syntaxes"
+
+# Put new '.sublime-syntax' language definition files
+.br
+# in this folder (or its subdirectories), for example:
+.br
+git clone https://github.com/tellnobody1/sublime-purescript-syntax
+
+# And then build the cache.
+.br
+bat cache --build
+.RE
+
+Once the cache is built, the new language will be visible in `\fBbat --list-languages\fR`.
+.br
+If you ever want to remove the custom languages, you can clear the cache with `\fBbat cache --clear\fR`. 
+
+.SH "ADDING CUSTOM THEMES"
+Similarly to custom languages, bat supports Sublime Text \fB.tmTheme\fR themes.
+These can be installed to `\fB$(bat --config-dir)/themes\fR`, and are added to the cache with
+`\fBbat cache --build`.
+.SH "MORE INFORMATION"
+
+For more information and up-to-date documentation, visit the bat repo:
+.br
+\fBhttps://github.com/sharkdp/bat\fR
