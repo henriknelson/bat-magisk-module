@@ -1,6 +1,6 @@
 id=bat-nelshh
 name=bat for Android
 version=v0.16.0
-versionCode=11
+versionCode=12
 author=nelshh
 description=A statically built version of the bat tool for android (aarch64)
