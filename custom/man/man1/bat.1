@@ -129,7 +129,7 @@ Configure which elements (line numbers, file headers, grid borders, Git modifica
 of components to display (e.g. 'numbers,changes,grid') or a pre\-defined style ('full').
 To set a default style, add the '\-\-style=".."' option to the configuration file or
 export the BAT_STYLE environment variable (e.g.: export BAT_STYLE=".."). Possible
-values: *auto*, full, plain, changes, header, grid, numbers, snip.
+values: *auto*, full, plain, changes, header, grid, rule, numbers, snip.
 .HP
 \fB\-r\fR, \fB\-\-line\-range\fR <N:M>...
 .IP
@@ -178,7 +178,7 @@ Alternatively, you can use the BAT_CONFIG_PATH environment variable to point bat
 location of the configuration file.
 .SH "ADDING CUSTOM LANGUAGES"
 bat supports Sublime Text \fB.sublime-syntax\fR language files, and can be
-customized to add additional languages to your local installation. To do this, add the \fB.sublime-snytax\fR language
+customized to add additional languages to your local installation. To do this, add the \fB.sublime-syntax\fR language
 files to `\fB$(bat --config-dir)/syntaxes\fR` and run `\fBbat cache --build\fR`.
 
 \fBExample:\fR
