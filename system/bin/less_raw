@@ -1,2 +1,2 @@
 #!/system/bin/sh
-/system/bin/less -rU "$@"
+/system/bin/less_custom -rU "$@"

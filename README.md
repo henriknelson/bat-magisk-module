@@ -6,6 +6,9 @@ This Magisk module installs the latest stable version of the bat tool to the tar
 
 ## Change Log
 
+### v1.5 - 2021-03-01
+* Updated bat to version 0.18.0
+
 ### v1.4 - 2021-01-17
 * Updated bat to version 0.17.1
 
